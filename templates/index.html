@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
+    <h1>
+      RSS Feed Reader by {{author}}
+    </h1>
+
+    <form action="/addToList" method="POST">
+      <fieldset>
+            <legend>Enter RSS Link</legend>
+            <p>
+              <label>Link:</label>
+              <input type = "text" name = "URL" value = ""/> <br>
+              Some of my favorites! <br>
+              https://news.google.com/news/rss/headlines/section/topic/TECHNOLOGY?ned=us&hl=en <br>
+              http://feeds.bbci.co.uk/news/technology/rss.xml?edition=uk<br>
+              https://www.nasa.gov/rss/dyn/breaking_news.rss<br>
+              https://xkcd.com/rss.xml<br>
+            </p>
+            <input type="submit" id="submit" value="Add URL">
+      </fieldset>
+    </form>
+    <form action="/printRSS" method="POST">
+      <fieldset>
+        <select name = 'URL' id="rssList">
+          {% for link in list %}
+            <option value="{{ link }}" {% if list.first %} SELECTED {% endif %}>{{ link }}</option>
+          {% endfor %}
+        </select>
+        <input type="submit" value="Load URL">
+      </fieldset>
+    </form>
+  <br>
+  <div id="rssOutput">RSS-feed will be listed here...</br>
+    {% for elem in feedtoprint %}
+      <blockquote type="text">{{ elem }}</blockquote>
+    {% endfor %}
+  </div>
+
+  </html>
